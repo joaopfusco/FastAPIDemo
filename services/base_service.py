@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from fastapi import HTTPException
+from fastapi import HTTPException, Query
 from typing import Type, Generic, TypeVar, List
 
 ModelType = TypeVar("ModelType")
@@ -9,7 +9,7 @@ SchemaCreateType = TypeVar("SchemaCreateType")
 class BaseService(Generic[ModelType, SchemaType, SchemaCreateType]):
     def __init__(self, model: Type[ModelType]):
         self.model = model
-
+        
     def get_all(self, db: Session) -> List[SchemaType]:
         return db.query(self.model).all()
 
