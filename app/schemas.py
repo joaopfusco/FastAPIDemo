@@ -1,6 +1,13 @@
 from pydantic import BaseModel
 from datetime import datetime
-from schemas.entity_schema import EntitySchema
+
+class EntitySchema(BaseModel):
+    id: int
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        orm_mode = True
 
 class UserSchemaPayload(BaseModel):
     username: str

@@ -1,9 +1,9 @@
 from fastapi_crudrouter import SQLAlchemyCRUDRouter
-from db.database import get_db
-from models.user import User
-from schemas.user_schema import UserSchemaResponse, UserSchemaPayload
+from app.database import get_db
+from app.models import User
+from app.schemas import UserSchemaResponse, UserSchemaPayload
 
-router = SQLAlchemyCRUDRouter(
+user_router = SQLAlchemyCRUDRouter(
     schema=UserSchemaResponse,
     create_schema=UserSchemaPayload,
     update_schema=UserSchemaPayload,
@@ -12,3 +12,4 @@ router = SQLAlchemyCRUDRouter(
     prefix="/users",
     tags=["Users"]
 )
+
