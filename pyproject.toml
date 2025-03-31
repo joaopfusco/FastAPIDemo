@@ -1,0 +1,26 @@
+[project]
+name = "FastAPIDemo"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "JPFUSCO_LAPTOP\\joaop", email = "joaopedrofusco@gmail.com"},
+]
+dependencies = [
+    "fastapi>=0.115.12", 
+    "python-decouple>=3.8", 
+    "python-keycloak>=5.3.1", 
+    "python-jose>=3.4.0", 
+    "SQLAlchemy>=2.0.40", 
+    "uvicorn>=0.34.0",
+    "passlib>=1.7.4",
+    "pydantic<2.0",
+    "fastapi-crudrouter>=0.8.6",
+    "psycopg2-binary>=2.9.10"
+]
+requires-python = "==3.12.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false

@@ -1,17 +1,21 @@
+FROM python:3.12-alpine AS builder
+
+RUN mkdir -p /project
+WORKDIR /project
+COPY . .
+
+RUN apk add --no-cache gcc musl-dev postgresql-dev linux-headers python3-dev
+
+RUN python -m pip install --no-cache-dir pdm
+RUN pdm install --check --prod --no-editable
+
 FROM python:3.12-alpine
 
-WORKDIR /app
+WORKDIR /project
+COPY --from=builder /project /project
 
-ENV PYTHONDONTWRITEBYTECODE=1 \
-    PYTHONUNBUFFERED=1
-
-RUN apk add --no-cache gcc musl-dev libffi-dev
-
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY . .
+ENV PATH="/project/.venv/bin:$PATH"
 
 EXPOSE 8000
 
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python", "-m", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

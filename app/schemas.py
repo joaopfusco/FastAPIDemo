@@ -5,16 +5,13 @@ class EntitySchema(BaseModel):
     id: int
     created_at: datetime
     updated_at: datetime
-
+    
     class Config:
         orm_mode = True
 
 class UserSchemaPayload(BaseModel):
     username: str
     password: str
-
-    class Config:
-        orm_mode = True
 
 class UserSchemaResponse(EntitySchema, UserSchemaPayload):
     pass
