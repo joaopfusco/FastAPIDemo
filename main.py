@@ -1,5 +1,6 @@
 from contextlib import asynccontextmanager
 from fastapi import Depends, FastAPI
+from decouple import config
 from app.database import create_tables
 from app.configs import get_current_user, KEYCLOAK_CLIENT_ID, KEYCLOAK_CLIENT_SECRET
 from app.routers import user_router
@@ -9,10 +10,12 @@ async def lifespan(app: FastAPI):
     create_tables()
     yield
 
+debug = config("DEBUG", cast=bool, default=True)
+
 app = FastAPI(
     lifespan=lifespan,
-    dependencies=[Depends(get_current_user)],
-    security=[{"oauth2": []}],
+    dependencies=[Depends(get_current_user) if not debug else Depends(lambda: None)],
+    security=[{"oauth2": []} if not debug else None],
     swagger_ui_init_oauth={
         "clientId": KEYCLOAK_CLIENT_ID,
         "clientSecret": KEYCLOAK_CLIENT_SECRET,
