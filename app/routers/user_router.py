@@ -3,10 +3,15 @@ from app.models.user import User
 from app.schemas.user_schema import UserResponse, UserPayload
 from sqlalchemy.orm import Session
 from fastapi import Depends
-from fastapi_crudrouter import SQLAlchemyCRUDRouter as CRUDRouter
+from app.routers.base_router import BaseRouter
 
-user_router = CRUDRouter(
-    schema=UserResponse, 
+class UserRouter(BaseRouter):
+    def get_all(self, session: Session):
+        print("Override no getAll")
+        return super().get_all(session)
+
+user_router = UserRouter(
+    schema=UserResponse,
     create_schema=UserPayload,
     update_schema=UserPayload,
     db_model=User,
@@ -15,8 +20,6 @@ user_router = CRUDRouter(
     tags=["Users"],
 )
 
-@user_router.get("", response_model=list[UserResponse])
-def get_all_users(db: Session = Depends(get_db)):
-    print("override no getAll")
-    users = db.query(User).all()
-    return users
+@user_router.get("/teste/", response_model=dict)
+def test_route(session: Session = Depends(get_db)):
+    return {"message": "Hello, World!"}
