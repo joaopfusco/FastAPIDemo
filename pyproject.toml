@@ -15,7 +15,8 @@ dependencies = [
     "passlib>=1.7.4",
     "pydantic>=2.11.2",
     "psycopg2-binary>=2.9.10",
-    "odata-query>=0.10.0"
+    "odata-query>=0.10.0",
+    "alembic>=1.15.2"
 ]
 requires-python = "==3.12.*"
 readme = "README.md"
