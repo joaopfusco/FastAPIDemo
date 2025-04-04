@@ -8,10 +8,3 @@ class EntitySchema(BaseModel):
     
     class Config:
         orm_mode = True
-
-class UserPayload(BaseModel):
-    username: str
-    password: str
-
-class UserResponse(EntitySchema, UserPayload):
-    pass

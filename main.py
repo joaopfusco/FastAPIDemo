@@ -1,9 +1,9 @@
 from contextlib import asynccontextmanager
 from fastapi import Depends, FastAPI
 from decouple import config
-from app.database import create_tables
-from app.configs import get_current_user, KEYCLOAK_CLIENT_ID, KEYCLOAK_CLIENT_SECRET
-from app.routers import user_router
+from app.db.database import create_tables
+from app.configs.keycloak_config import get_current_user, KEYCLOAK_CLIENT_ID, KEYCLOAK_CLIENT_SECRET
+from app.routers.user_router import user_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):

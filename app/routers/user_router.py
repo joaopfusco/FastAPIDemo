@@ -1,6 +1,6 @@
-from app.database import get_db
-from app.models import User
-from app.schemas import UserResponse, UserPayload
+from app.db.database import get_db
+from app.models.user import User
+from app.schemas.user_schema import UserResponse, UserPayload
 from sqlalchemy.orm import Session
 from fastapi import Depends
 from fastapi_crudrouter import SQLAlchemyCRUDRouter as CRUDRouter
