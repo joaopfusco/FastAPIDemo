@@ -9,9 +9,9 @@ class EntitySchema(BaseModel):
     class Config:
         orm_mode = True
 
-class UserSchemaPayload(BaseModel):
+class UserPayload(BaseModel):
     username: str
     password: str
 
-class UserSchemaResponse(EntitySchema, UserSchemaPayload):
+class UserResponse(EntitySchema, UserPayload):
     pass
