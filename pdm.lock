@@ -5,7 +5,7 @@
 groups = ["default"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:74fea0fdda8f5866b02bc6332384bd5850dc682d2ba4059866f2071340cf51a4"
+content_hash = "sha256:a34e82400ce03440c07fecffd6a23dbd26ad7c70e04152f76a668f09b3bc4e84"
 
 [[metadata.targets]]
 requires_python = "==3.12.*"
@@ -230,21 +230,6 @@ files = [
 ]
 
 [[package]]
-name = "fastapi-filter"
-version = "2.0.1"
-requires_python = "<4.0,>=3.9"
-summary = "FastAPI filter"
-groups = ["default"]
-dependencies = [
-    "fastapi<1.0,>=0.100.0",
-    "pydantic<3.0.0,>=2.0.0",
-]
-files = [
-    {file = "fastapi_filter-2.0.1-py3-none-any.whl", hash = "sha256:711d48707ec62f7c9e12a7713fc0f6a99858a9e3741b4d108102d5599e77197d"},
-    {file = "fastapi_filter-2.0.1.tar.gz", hash = "sha256:cffda370097af7e404f1eb188aca58b199084bfaf7cec881e40b404adf12566e"},
-]
-
-[[package]]
 name = "greenlet"
 version = "3.1.1"
 requires_python = ">=3.7"
@@ -334,6 +319,21 @@ dependencies = [
 files = [
     {file = "jwcrypto-1.5.6-py3-none-any.whl", hash = "sha256:150d2b0ebbdb8f40b77f543fb44ffd2baeff48788be71f67f03566692fd55789"},
     {file = "jwcrypto-1.5.6.tar.gz", hash = "sha256:771a87762a0c081ae6166958a954f80848820b2ab066937dc8b8379d65b1b039"},
+]
+
+[[package]]
+name = "odata-query"
+version = "0.10.0"
+requires_python = "<4.0,>=3.7"
+summary = "An OData query parser and transpiler."
+groups = ["default"]
+dependencies = [
+    "python-dateutil<3.0.0,>=2.8.1",
+    "sly<0.5,>=0.4",
+]
+files = [
+    {file = "odata_query-0.10.0-py3-none-any.whl", hash = "sha256:eeb9061e87fb047c40bc3e59c5f1fbf5dbf4ea0f7ff2fd510d365d6c33fe7fcb"},
+    {file = "odata_query-0.10.0.tar.gz", hash = "sha256:230d847d334fc36dc072164886711ad794bedec6d864c2600de614c596fc1c4f"},
 ]
 
 [[package]]
@@ -446,6 +446,20 @@ files = [
 ]
 
 [[package]]
+name = "python-dateutil"
+version = "2.9.0.post0"
+requires_python = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
+summary = "Extensions to the standard Python datetime module"
+groups = ["default"]
+dependencies = [
+    "six>=1.5",
+]
+files = [
+    {file = "python-dateutil-2.9.0.post0.tar.gz", hash = "sha256:37dd54208da7e1cd875388217d5e00ebd4179249f90fb72437e91a35459a0ad3"},
+    {file = "python_dateutil-2.9.0.post0-py2.py3-none-any.whl", hash = "sha256:a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427"},
+]
+
+[[package]]
 name = "python-decouple"
 version = "3.8"
 summary = "Strict separation of settings from code."
@@ -544,6 +558,15 @@ groups = ["default"]
 files = [
     {file = "six-1.17.0-py2.py3-none-any.whl", hash = "sha256:4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274"},
     {file = "six-1.17.0.tar.gz", hash = "sha256:ff70335d468e7eb6ec65b95b99d3a2836546063f63acc5171de367e834932a81"},
+]
+
+[[package]]
+name = "sly"
+version = "0.4"
+summary = "SLY - Sly Lex Yacc"
+groups = ["default"]
+files = [
+    {file = "sly-0.4.tar.gz", hash = "sha256:e5f2266a231322cc17519fbc3a3ba1c6335fed5a9a55abe0e598a35aea0ac32a"},
 ]
 
 [[package]]

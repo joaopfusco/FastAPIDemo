@@ -3,6 +3,7 @@ from typing import Type, List, Callable, Optional
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
+from odata_query.sqlalchemy import apply_odata_query
 from app.db.database import get_db
 from app.models.entity import Entity
 
@@ -35,6 +36,13 @@ class BaseRouter(APIRouter):
         if not item:
             raise HTTPException(status_code=404, detail="Not found")
         return item
+    
+    def odata(self, query: Optional[str], session: Session):
+        items_db = session.query(self.db_model)
+        if query:
+            filtered_items = apply_odata_query(items_db, query)
+            return filtered_items
+        return items_db.all()
 
     def create(self, item: Type[BaseModel], session: Session):
         try:
@@ -81,6 +89,10 @@ class BaseRouter(APIRouter):
         @self.get("/{item_id}", response_model=self.schema)
         def get_one(item_id: int, session: Session = Depends(self.db)):
             return self.get_one(item_id, session)
+        
+        @self.get("/odata/", response_model=List[self.schema])
+        def odata(query: Optional[str] = None, session: Session = Depends(self.db)):
+            return self.odata(query, session)
 
         @self.post("/", response_model=self.schema)
         def create(item: self.create_schema, session: Session = Depends(self.db)): # type: ignore
