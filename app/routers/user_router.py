@@ -1,20 +1,20 @@
 from app.db.database import get_db
 from app.models.user import User
-from app.schemas.user_schema import UserResponse, UserPayload
+from app.schemas.user_schema import UserSchema, UserCreate
 from sqlalchemy.orm import Session
 from fastapi import Depends
 from app.routers.base_router import BaseRouter
+from app.services.user_service import UserService
 
 class UserRouter(BaseRouter):
-    def get_all(self, session: Session):
-        print("Override no getAll")
-        return super().get_all(session)
+    pass
 
 user_router = UserRouter(
-    schema=UserResponse,
-    create_schema=UserPayload,
-    update_schema=UserPayload,
-    db_model=User,
+    service=UserService,
+    schema=UserSchema,
+    create_schema=UserCreate,
+    update_schema=UserCreate,
+    model=User,
     db=get_db,
     prefix="/users",
     tags=["Users"],
