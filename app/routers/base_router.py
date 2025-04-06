@@ -34,7 +34,7 @@ class BaseRouter(APIRouter):
         try:
             return func(*args, **kwargs)
         except Exception as e:
-            raise HTTPException(status_code=500, detail=str(e))
+            raise HTTPException(status_code=400, detail=str(e))
 
     def add_routes(self):
         @self.get("/", response_model=List[self.schema])
