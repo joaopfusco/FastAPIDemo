@@ -2,8 +2,6 @@ from fastapi import Depends
 from typing import Type, Callable, Optional
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
-from sqlalchemy.exc import SQLAlchemyError
-from odata_query.sqlalchemy import apply_odata_query
 from app.db.database import get_db
 from app.models.entity import Entity
 
