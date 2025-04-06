@@ -1,14 +1,14 @@
 from fastapi import Depends, FastAPI
 from decouple import config
-# from contextlib import asynccontextmanager
-# from app.db.database import create_tables
+from contextlib import asynccontextmanager
+from app.db.database import create_tables
 from app.configs.keycloak_config import get_current_user, KEYCLOAK_CLIENT_ID, KEYCLOAK_CLIENT_SECRET
 from app.routers.user_router import user_router
 
-# @asynccontextmanager
-# async def lifespan(app: FastAPI):
-#     create_tables()
-#     yield
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    create_tables()
+    yield
 
 debug = config("DEBUG", cast=bool, default=True)
 
