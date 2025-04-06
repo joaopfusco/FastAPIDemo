@@ -1,21 +1,27 @@
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.ext.declarative import DeclarativeMeta
 from decouple import config
+from typing import AsyncGenerator
 
-DATABASE_URL = config("DATABASE_URL", default="sqlite:///./db.sqlite3")
-connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
+DATABASE_URL = config("DATABASE_URL", default="sqlite+aiosqlite:///./db.sqlite3")
 
-engine = create_engine(DATABASE_URL, connect_args=connect_args)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
+engine = create_async_engine(DATABASE_URL, echo=True, future=True)
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+SessionLocal = sessionmaker(
+    bind=engine,
+    class_=AsyncSession,
+    expire_on_commit=False,
+    autoflush=False,
+    autocommit=False,
+)
 
-def create_tables():
-    Base.metadata.create_all(bind=engine)
+Base: DeclarativeMeta = declarative_base()
+
+async def get_db() -> AsyncGenerator[AsyncSession, None]:
+    async with SessionLocal() as session:
+        yield session
+
+async def create_tables():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)

@@ -7,7 +7,7 @@ from app.routers.user_router import user_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    create_tables()
+    await create_tables()
     yield
 
 debug = config("DEBUG", cast=bool, default=True)

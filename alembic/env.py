@@ -2,6 +2,7 @@ from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
+from sqlalchemy.engine.url import make_url
 
 from alembic import context
 from decouple import config as decouple_config
@@ -20,7 +21,17 @@ for finder, name, ispkg in pkgutil.iter_modules([models_path]):
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
-config.set_main_option(name="sqlalchemy.url", value=str(DATABASE_URL))
+
+async_url = DATABASE_URL
+url_obj = make_url(async_url)
+driver_mapping = {
+    "postgresql+asyncpg": "postgresql",
+    "sqlite+aiosqlite": "sqlite",
+}
+sync_driver = driver_mapping.get(url_obj.drivername)
+sync_url = str(url_obj.set(drivername=sync_driver))
+
+config.set_main_option(name="sqlalchemy.url", value=str(sync_url))
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.

@@ -1,8 +1,6 @@
 from app.db.database import get_db
 from app.models.user import User
 from app.schemas.user_schema import UserOut, UserIn
-from sqlalchemy.orm import Session
-from fastapi import Depends
 from app.routers.base_router import BaseRouter
 from app.services.user_service import UserService
 
