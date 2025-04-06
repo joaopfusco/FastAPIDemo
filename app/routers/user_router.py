@@ -8,7 +8,7 @@ class UserRouter(BaseRouter):
     pass
 
 user_router = UserRouter(
-    service=UserService,
+    service=UserService(),
     schema=UserOut,
     create_schema=UserIn,
     update_schema=UserIn,

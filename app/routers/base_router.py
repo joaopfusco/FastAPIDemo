@@ -22,7 +22,7 @@ class BaseRouter(APIRouter):
     ):
         super().__init__(prefix=prefix, tags=tags or [model.__name__])
 
-        self.service = service(model)
+        self.service = service
         self.schema = schema
         self.create_schema = create_schema
         self.update_schema = update_schema
