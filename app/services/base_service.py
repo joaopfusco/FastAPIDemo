@@ -9,15 +9,22 @@ class BaseService:
     def __init__(self, model: Type[Entity]):
         self.model = model
 
+    def query(self):
+        return select(self.model)
+    
+    async def execute_query(self, session: AsyncSession, query):
+        result = await session.execute(query)
+        return result.scalars()
+
     async def get_all(self, session: AsyncSession):
-        stmt = select(self.model)
-        result = await session.execute(stmt)
-        return result.scalars().all()
+        stmt = self.query()
+        result = await self.execute_query(session, stmt)
+        return result.all()
 
     async def get_one(self, item_id: int, session: AsyncSession):
-        stmt = select(self.model).where(self.model.id == item_id)
-        result = await session.execute(stmt)
-        item = result.scalars().first()
+        stmt = self.query().where(self.model.id == item_id)
+        result = await self.execute_query(session, stmt)
+        item = result.first()
         if not item:
             raise Exception("Not found")
         return item

@@ -34,7 +34,7 @@ class BaseRouter(APIRouter):
         try:
             return await func(*args, **kwargs)
         except Exception as e:
-            raise HTTPException(status_code=500, detail=str(e))
+            raise HTTPException(status_code=400, detail=str(e))
 
     def add_routes(self):
         @self.get("/", response_model=List[self.schema])
@@ -49,9 +49,9 @@ class BaseRouter(APIRouter):
         async def odata(query: Optional[str] = None, session: AsyncSession = Depends(self.db)):
             async def func():
                 if query:
-                    stmt = apply_odata_query(select(self.model), query)
-                    result = await session.execute(stmt)
-                    return result.scalars().all()
+                    stmt = apply_odata_query(self.service.query(), query)
+                    result = await self.service.execute_query(session, stmt)
+                    return result.all()
                 return await self.service.get_all(session)
 
             return await self.try_execute(lambda: func())
