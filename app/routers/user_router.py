@@ -21,5 +21,5 @@ user_router = UserRouter(
 )
 
 @user_router.get("/teste/", response_model=dict)
-def test_route(session: Session = Depends(get_db)):
+async def test_route():
     return {"message": "Hello, World!"}
