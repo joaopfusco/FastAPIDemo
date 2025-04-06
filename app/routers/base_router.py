@@ -2,7 +2,6 @@ from fastapi import APIRouter, Depends, HTTPException
 from typing import Type, List, Callable, Optional
 from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
-from odata_query.sqlalchemy import apply_odata_query
 from app.db.database import get_db
 from app.models.entity import Entity
 from app.services.base_service import BaseService
@@ -44,17 +43,6 @@ class BaseRouter(APIRouter):
         @self.get("/{item_id}", response_model=self.schema)
         async def get_one(item_id: int, session: AsyncSession = Depends(self.db)):
             return await self.try_execute(lambda: self.service.get_one(item_id, session))
-
-        @self.get("/odata/", response_model=List[self.schema])
-        async def odata(query: Optional[str] = None, session: AsyncSession = Depends(self.db)):
-            async def func():
-                if query:
-                    stmt = apply_odata_query(self.service.query(), query)
-                    result = await self.service.execute_query(session, stmt)
-                    return result.all()
-                return await self.service.get_all(session)
-
-            return await self.try_execute(lambda: func())
 
         @self.post("/", response_model=self.schema)
         async def create(item: self.create_schema, session: AsyncSession = Depends(self.db)):  # type: ignore
